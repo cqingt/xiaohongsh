@@ -50,7 +50,9 @@ class IndexPage extends StatelessWidget {
 //                Provide.value<CurrentIndexProvide>(context).changeCurrentIndex(index);
 //              },
 //            ),
-            body: HomePage(),
+            body: Container(
+              child: HomePage(),
+            ),
 //            body: IndexedStack(
 //              children: tabBodies,
 //              index: currentIndex,

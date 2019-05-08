@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import './detail_page.dart';
 
 class TravelPage extends StatelessWidget {
   List posts = [
@@ -164,11 +165,14 @@ class TravelPage extends StatelessWidget {
     );
   }
 
-  Widget _getItem2() {
+  Widget _getItem2(context) {
     return InkWell(
-      onTap: (){},
+      onTap: (){
+        Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
+          return DetailPage();
+        }));
+      },
       child: Container(
-//        color: Colors.white,
           margin: EdgeInsets.only(top: 10, left: 8, bottom: 0),
           width: ScreenUtil().setWidth(350),
           height: ScreenUtil().setHeight(560),
@@ -188,12 +192,12 @@ class TravelPage extends StatelessWidget {
     );
   }
 
-  Widget _getWrapList() {
+  Widget _getWrapList(context) {
     return Wrap(
         spacing: 2,
         crossAxisAlignment: WrapCrossAlignment.start,
         children: List.generate(10, (index) {
-          return _getItem2();
+          return _getItem2(context);
         })
     );
   }
@@ -202,12 +206,11 @@ class TravelPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       key: new PageStorageKey('travel'),
-
-//      padding: EdgeInsets.only(bottom: 10),
       color: Color.fromRGBO(240, 240, 240, 1),
       child: ListView(
         children: <Widget>[
-          _getWrapList(),
+          _getWrapList(context),
+          SizedBox(height: 10,)
         ],
       ),
     );

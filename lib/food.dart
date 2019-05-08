@@ -167,10 +167,9 @@ class FoodPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         key: new PageStorageKey('food'),
-        padding: EdgeInsets.only(left: 6,right: 6, top: 8, bottom: 8),
+        padding: EdgeInsets.only(left: 6,right: 6, top: 10),
         color: Color.fromRGBO(240, 240, 240, 1),
         child: GridView.builder(
-//          padding: EdgeInsets.only(top: 8),
           itemCount: posts.length ,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,

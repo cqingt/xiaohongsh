@@ -3,26 +3,38 @@ import './food.dart';
 import './travel.dart';
 import './house.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import './my_drawer.dart';
+
 class HomePage extends StatelessWidget {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new  GlobalKey();
 
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
+        key: _scaffoldKey,
         appBar: AppBar(
-//          leading: Container(
-//            width: ScreenUtil().setWidth(40),
-//            height: ScreenUtil().setHeight(40),
-//            child: CircleAvatar(
-//              radius: 30,
-//              backgroundImage:NetworkImage(
-//                  'https://img.xiaohongshu.com/avatar/5b5d931b14de412246d05364.jpg@80w_80h_90q_1e_1c_1x.jpg',
-//                scale: 0.4,
-//              ),
-//            ),
+          leading: IconButton(
+            onPressed: () {
+              _scaffoldKey.currentState.openDrawer();
+            },
+            icon: Container(
+              child:CircleAvatar(
+                radius: 20,
+                backgroundImage:NetworkImage(
+                  'https://img.xiaohongshu.com/avatar/5b5d931b14de412246d05364.jpg@80w_80h_90q_1e_1c_1x.jpg',
+//                  scale: 0.4,
+                ),
+            ),
+          ),
+          ),
+//          leading: IconButton(
+//              icon: Icon(Icons.account_circle),
+//              onPressed: (){
+//                _scaffoldKey.currentState.openDrawer();
+//              }
 //          ),
-          leading: Icon(Icons.menu),
           centerTitle: true,
           title: Text('小粉记'),
           bottom: TabBar(
@@ -58,6 +70,10 @@ class HomePage extends StatelessWidget {
             FoodPage(),
             HousePage()
           ],
+        ),
+        drawer: Container(
+          width: ScreenUtil().setWidth(500),
+          child: MyDrawer(),
         ),
       ),
     );
