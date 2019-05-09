@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import './detail_page.dart';
+import 'package:xiaohongshu/pages/detail_page.dart';
 
 class TravelPage extends StatelessWidget {
   List posts = [

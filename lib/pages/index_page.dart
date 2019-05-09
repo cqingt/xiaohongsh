@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import './member_page.dart';
-import './home_page.dart';
+import 'package:xiaohongshu/pages/member_page.dart';
+import 'package:xiaohongshu/pages/home_page.dart';
 import 'package:provide/provide.dart';
-import './provide/current_index.dart';
+import '../provide/current_index.dart';
 
 class IndexPage extends StatelessWidget {
   final List<BottomNavigationBarItem> bottomTabs = [
@@ -34,13 +34,7 @@ class IndexPage extends StatelessWidget {
 
         return Scaffold(
             //floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-            floatingActionButton: FloatingActionButton(
-              elevation: 0,
-              onPressed: (){},
-              child: Icon(Icons.add),
-              tooltip: '发布',
-              isExtended:true,
-            ),
+
 //            bottomNavigationBar: BottomNavigationBar(
 //              type: BottomNavigationBarType.fixed,
 //              fixedColor: Colors.black,

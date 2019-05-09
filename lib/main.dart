@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './index_page.dart';
+import 'package:xiaohongshu/pages/index_page.dart';
 import 'package:provide/provide.dart';
 import './provide/current_index.dart';
 
