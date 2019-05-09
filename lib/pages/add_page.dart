@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class AddPage extends StatelessWidget {
+class AddPage extends StatefulWidget {
+  @override
+  _AddPageState createState() => _AddPageState();
+}
+
+class _AddPageState extends State<AddPage> {
+  String category = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,16 +56,51 @@ class AddPage extends StatelessWidget {
             child: Text('标签：'),
           ),
           Container(
-            margin: EdgeInsets.only(left: 10,right: 10),
-            child: FilterChip(label: Text('旅行'), onSelected: (bool value) {}),
+            margin: EdgeInsets.only(left: 10, right: 2),
+            child: FilterChip(
+              selectedColor: Colors.pink,
+              label: Text('旅行'),
+              onSelected: (bool value) {
+                setState(() {
+                  if (value == true) {
+                    category = '旅行';
+                  }
+                });
+              },
+              selected: category == '旅行',
+            ),
           ),
           Container(
-            margin: EdgeInsets.only(left: 10,right: 10),
-            child: FilterChip(label: Text('美食'), onSelected: (bool value) {}),
+            margin: EdgeInsets.only(left: 10, right: 2),
+            child: FilterChip(
+//              backgroundColor: Colors.pink,
+              selectedColor: Colors.pink,
+
+              label: Text('美食',),
+              onSelected: (bool value) {
+                setState(() {
+                  if (value == true) {
+                    category = '美食';
+                  }
+                });
+              },
+              selected: category == '美食',
+            ),
           ),
           Container(
-            margin: EdgeInsets.only(left: 10,right: 10),
-            child:  FilterChip(label: Text('家居'), onSelected: (bool value) {}),
+            margin: EdgeInsets.only(left: 10, right: 2),
+            child: FilterChip(
+              selectedColor: Colors.pink,
+              label: Text('家居'),
+              onSelected: (bool value) {
+                setState(() {
+                  if (value == true) {
+                    category = '家居';
+                  }
+                });
+              },
+              selected: category == '家居',
+            ),
           ),
         ],
       ),

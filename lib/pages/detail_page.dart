@@ -299,12 +299,16 @@ class DetailPage extends StatelessWidget {
 
   // 底部横线
   Widget _getBottomLine() {
-    return Container(
-      margin: EdgeInsets.only(left: 10, right: 10),
-      decoration: BoxDecoration(
-          border:
-              Border(bottom: BorderSide(width: 1, color: Colors.grey[200]))),
+    return Divider(
+      height: 6,
+      indent: 10,
     );
+//    return Container(
+//      margin: EdgeInsets.only(left: 10, right: 10),
+//      decoration: BoxDecoration(
+//          border:
+//              Border(bottom: BorderSide(width: 1, color: Colors.grey[200]))),
+//    );
   }
 
   //轮播
