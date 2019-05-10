@@ -7,43 +7,71 @@ class AddPage extends StatefulWidget {
 }
 
 class _AddPageState extends State<AddPage> {
-  String category = '';
+  final textFieldController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+  String category, title, content;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    textFieldController.addListener((){
+      debugPrint("title: ${textFieldController.text}");
+    });
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    textFieldController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('标记我的生活'),
-          centerTitle: true,
-          actions: <Widget>[
-            Container(
-                margin: EdgeInsets.only(right: 10),
-                height: ScreenUtil().setHeight(80),
-                alignment: Alignment.center,
-                child: InkWell(
-                  child: Text(
-                    '发布',
-                    style: TextStyle(
-                        color: Colors.white, fontSize: ScreenUtil().setSp(30)),
-                  ),
-                  onTap: () {},
-                ))
-          ],
-        ),
-        body: SingleChildScrollView(
-          // 避免键盘被遮挡
-          child: Container(
-            margin: EdgeInsets.all(10),
-            child: Column(
-              children: <Widget>[
-                _imageList(),
-                _getTitle(),
-                _getContent(),
-                _getCategory(),
-              ],
+      appBar: AppBar(
+        title: Text('标记我的生活'),
+        centerTitle: true,
+        actions: <Widget>[
+          Container(
+              margin: EdgeInsets.only(right: 10),
+              height: ScreenUtil().setHeight(80),
+              alignment: Alignment.center,
+              child: InkWell(
+                child: Text(
+                  '发布',
+                  style: TextStyle(
+                      color: Colors.white, fontSize: ScreenUtil().setSp(30)),
+                ),
+                onTap: () {
+                  formKey.currentState.save();
+                  debugPrint('title: ${title}');
+                  debugPrint('content: ${content}');
+                  debugPrint('cateogry: ${category}');
+                },
+              ))
+        ],
+      ),
+      body: Theme(
+          data: ThemeData(hintColor: Colors.grey[400]),
+          child: SingleChildScrollView(
+            // 避免键盘被遮挡
+            child: Container(
+              margin: EdgeInsets.all(10),
+              child: Form(
+                  key: formKey,
+                  child: Column(
+                    children: <Widget>[
+                      _imageList(),
+                      _getTitle(),
+                      _getContent(),
+                      _getCategory(),
+                    ],
+              )),
             ),
-          ),
-        ));
+          )),
+    );
   }
 
   Widget _getCategory() {
@@ -76,7 +104,9 @@ class _AddPageState extends State<AddPage> {
 //              backgroundColor: Colors.pink,
               selectedColor: Colors.pink,
 
-              label: Text('美食',),
+              label: Text(
+                '美食',
+              ),
               onSelected: (bool value) {
                 setState(() {
                   if (value == true) {
@@ -150,9 +180,13 @@ class _AddPageState extends State<AddPage> {
   Widget _getTitle() {
     return Container(
       child: TextField(
+//        controller: textFieldController,
         decoration: InputDecoration(
           hintText: '输入标题',
         ),
+        onSubmitted: (value) {
+          title = value;
+        },
       ),
     );
   }
@@ -160,12 +194,17 @@ class _AddPageState extends State<AddPage> {
   Widget _getContent() {
     return Container(
       child: TextField(
+//        controller: textFieldController,
         maxLines: 8, // 显示行数
         keyboardType: TextInputType.multiline,
         decoration: InputDecoration(
           hintText: '输入内容',
 //          contentPadding: EdgeInsets.symmetric(vertical: 40)
         ),
+        onSubmitted: (value) {
+          debugPrint('submit: ${value}');
+          content = value;
+        },
       ),
     );
   }
