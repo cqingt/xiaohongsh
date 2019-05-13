@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 class AddPage extends StatefulWidget {
   @override
@@ -7,16 +9,23 @@ class AddPage extends StatefulWidget {
 }
 
 class _AddPageState extends State<AddPage> {
-  final textFieldController = TextEditingController();
+  final titleController = TextEditingController();
+  final contentController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   String category, title, content;
+  File _image;
+  List imageList = List<File>();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    textFieldController.addListener((){
-      debugPrint("title: ${textFieldController.text}");
+    titleController.addListener(() {
+      title = titleController.text;
+    });
+
+    contentController.addListener(() {
+      content = contentController.text;
     });
   }
 
@@ -24,7 +33,8 @@ class _AddPageState extends State<AddPage> {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    textFieldController.dispose();
+    titleController.dispose();
+    contentController.dispose();
   }
 
   @override
@@ -46,9 +56,6 @@ class _AddPageState extends State<AddPage> {
                 ),
                 onTap: () {
                   formKey.currentState.save();
-                  debugPrint('title: ${title}');
-                  debugPrint('content: ${content}');
-                  debugPrint('cateogry: ${category}');
                 },
               ))
         ],
@@ -62,16 +69,82 @@ class _AddPageState extends State<AddPage> {
               child: Form(
                   key: formKey,
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      _imageList(),
+                      _getListView(),
                       _getTitle(),
                       _getContent(),
                       _getCategory(),
                     ],
-              )),
+                  )),
             ),
           )),
     );
+  }
+
+  Future _getImage() async {
+    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+
+    setState(() {
+      _image = image;
+      imageList.add(image);
+      debugPrint("${imageList}");
+    });
+  }
+
+  Widget _getListView() {
+    return GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3),
+        itemCount: imageList.length + 1,
+        shrinkWrap: true,
+        itemBuilder: (BuildContext context, int index) {
+          if (index == imageList.length) {
+            return InkWell(
+              child: Container(
+                  width: ScreenUtil().setWidth(200),
+                  height: ScreenUtil().setHeight(180),
+                  margin: EdgeInsets.only(right: 10, bottom: 10),
+                  child: Icon(
+                    Icons.add,
+                    color: Colors.grey[300],
+                  ),
+                  decoration: BoxDecoration(
+                      border: Border.all(width: 1, color: Colors.grey[300]),
+                      borderRadius: BorderRadius.circular(6))),
+              onTap: _getImage,
+            );
+          }
+
+          return Container(
+              width: ScreenUtil().setWidth(200),
+              height: ScreenUtil().setHeight(180),
+              margin: EdgeInsets.only(right: 10, bottom: 10),
+              child: Image.file(imageList[index], fit: BoxFit.cover,),
+              decoration: BoxDecoration(
+                  border: Border.all(width: 1, color: Colors.grey[300]),
+                  borderRadius: BorderRadius.circular(6))
+          );
+        }
+    );
+  }
+
+  Widget _getUploadImg(imgPath) {
+    if (imgPath == null) {
+      return Container(
+        child: Text(''),
+      );
+    } else {
+      return Container(
+          width: ScreenUtil().setWidth(200),
+          height: ScreenUtil().setHeight(180),
+          margin: EdgeInsets.only(right: 10, bottom: 10),
+          child: Image.file(imgPath, fit: BoxFit.cover,),
+          decoration: BoxDecoration(
+              border: Border.all(width: 1, color: Colors.grey[300]),
+              borderRadius: BorderRadius.circular(6))
+      );
+    }
   }
 
   Widget _getCategory() {
@@ -137,52 +210,12 @@ class _AddPageState extends State<AddPage> {
     );
   }
 
-  Widget _imageList() {
-    return Wrap(
-      children: <Widget>[
-        Container(
-            width: ScreenUtil().setWidth(200),
-            height: ScreenUtil().setHeight(180),
-            margin: EdgeInsets.only(right: 10, bottom: 10),
-            child: Icon(
-              Icons.add,
-              color: Colors.grey[300],
-            ),
-            decoration: BoxDecoration(
-                border: Border.all(width: 1, color: Colors.grey[300]),
-                borderRadius: BorderRadius.circular(6))),
-        Container(
-            width: ScreenUtil().setWidth(200),
-            height: ScreenUtil().setHeight(180),
-            margin: EdgeInsets.only(right: 10, bottom: 10),
-            child: Icon(
-              Icons.add,
-              color: Colors.grey[300],
-            ),
-            decoration: BoxDecoration(
-                border: Border.all(width: 1, color: Colors.grey[300]),
-                borderRadius: BorderRadius.circular(6))),
-        Container(
-            width: ScreenUtil().setWidth(200),
-            height: ScreenUtil().setHeight(180),
-            margin: EdgeInsets.only(right: 10, bottom: 10),
-            child: Icon(
-              Icons.add,
-              color: Colors.grey[300],
-            ),
-            decoration: BoxDecoration(
-                border: Border.all(width: 1, color: Colors.grey[300]),
-                borderRadius: BorderRadius.circular(6))),
-      ],
-    );
-  }
-
   Widget _getTitle() {
     return Container(
       child: TextField(
-//        controller: textFieldController,
+        controller: titleController,
         decoration: InputDecoration(
-          hintText: '输入标题',
+          hintText: '请输入标题',
         ),
         onSubmitted: (value) {
           title = value;
@@ -194,11 +227,12 @@ class _AddPageState extends State<AddPage> {
   Widget _getContent() {
     return Container(
       child: TextField(
-//        controller: textFieldController,
-        maxLines: 8, // 显示行数
+        controller: contentController,
+        maxLines: 8,
+        // 显示行数
         keyboardType: TextInputType.multiline,
         decoration: InputDecoration(
-          hintText: '输入内容',
+          hintText: '请输入发布内容',
 //          contentPadding: EdgeInsets.symmetric(vertical: 40)
         ),
         onSubmitted: (value) {
