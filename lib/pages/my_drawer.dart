@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'login_page.dart';
 
 class MyDrawer extends StatelessWidget {
 
@@ -49,7 +50,12 @@ class MyDrawer extends StatelessWidget {
           ListTile(
             title: Text('退出'),
             leading: Icon(Icons.directions, size: 22,),
-            onTap: () => Navigator.pop(context),
+            onTap: () {
+              Navigator.pop(context); // 对于在drawer中使用导航，需关闭drawer 再跳转，否则返回报错
+              Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
+                return LoginPage();
+              }));
+            }
           )
         ],
       )
