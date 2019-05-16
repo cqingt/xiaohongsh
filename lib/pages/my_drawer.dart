@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'login_page.dart';
 import 'new_login_page.dart';
 import 'logo_login_page.dart';
+import 'login_register_page.dart';
 
 class MyDrawer extends StatelessWidget {
 
@@ -36,7 +37,12 @@ class MyDrawer extends StatelessWidget {
           ListTile(
             title: Text('我的收藏'),
             leading: Icon(Icons.favorite, size: 22),
-            onTap: () => Navigator.pop(context),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
+                  return LoginRegisterPage();
+                }));
+              }
           ),
 
           ListTile(
