@@ -51,29 +51,57 @@ class SetPasswordPage extends StatelessWidget {
       child: TextFormField(
         obscureText: true,
         decoration: InputDecoration(
-          labelText: '新密码',
-          hintText: '请输入新密码',
+//          fillColor: Colors.grey,
+//          labelText: '新密码',
+          hintText: ' 请输入新密码',
+          border: InputBorder.none,
+          prefixIcon: Container(
+            width: 80,
+            alignment: Alignment.center,
+            child: Text('密码'),
+              color: Colors.grey.withOpacity(0.2),
+          ),
 //            icon: Icon(Icons.remove_red_eye)
         ),
         validator: (v) {
           return v.trim().length > 0 ? null : "密码不能为空";
         },
       ),
+      decoration: BoxDecoration(
+        // 下滑线浅灰色，宽度1像素
+          color: Colors.grey.withOpacity(0.1),
+          border: Border(bottom: BorderSide(color: Colors.grey[200], width: 1.0))
+      ),
     );
   }
 
   Widget _getRePeat() {
     return Container(
+      margin: EdgeInsets.only(top: 10),
       child: TextFormField(
         obscureText: true,
         decoration: InputDecoration(
-          labelText: '确认密码',
-          hintText: '请输入确认密码',
+          contentPadding: EdgeInsets.only(top: 15,left: 30),
+//          labelText: '确认密码',
+          border: InputBorder.none,
+          prefixIcon: Container(
+            width: 80,
+            alignment: Alignment.center,
+            child: Text('确认密码'),
+            color: Colors.grey.withOpacity(0.2),
+          ),
+          hintText: '  请输入确认密码',
 //            icon: Icon(Icons.remove_red_eye)
         ),
         validator: (v) {
           return v.trim().length > 0 ? null : "密码不能为空";
         },
+      ),
+      decoration: BoxDecoration(
+        // 下滑线浅灰色，宽度1像素
+          border: Border(bottom: BorderSide(color: Colors.grey[200], width: 1.0)),
+          color: Colors.grey.withOpacity(0.1),
+
       ),
     );
   }

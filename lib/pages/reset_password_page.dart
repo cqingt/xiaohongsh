@@ -6,6 +6,7 @@ class ResetPasswordPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         title: Text('忘记密码'),
         centerTitle: true,
@@ -30,6 +31,7 @@ class ResetPasswordPage extends StatelessWidget {
   Widget _getUsername() {
     return Container(
       child: TextFormField(
+        keyboardType: TextInputType.phone,
         decoration: InputDecoration(
             labelText: '手机号',
             hintText: '请输入手机号',
@@ -64,8 +66,10 @@ class ResetPasswordPage extends StatelessWidget {
           Expanded(
             child: Container(
               child: RaisedButton(
-                onPressed: null,
-                child: Text('获取验证码'),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                onPressed: (){},
+                color: Colors.pink,
+                child: Text('获取验证码', style: TextStyle(color: Colors.white),),
               ),
             ),
             flex: 1,

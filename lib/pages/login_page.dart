@@ -8,6 +8,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         title: Text('登录'),
         centerTitle: true,
@@ -43,9 +44,13 @@ class LoginPage extends StatelessWidget {
       margin: EdgeInsets.only(top: 20),
       child: TextFormField(
         decoration: InputDecoration(
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(20),
+            borderSide: BorderSide(width: 1, color: Colors.grey.withOpacity(0.3))
+          ),
           contentPadding: EdgeInsets.only(left: 10,top: 15,bottom: 5),
-            labelText: '手机号',
-            hintText: '请输入手机号',
+//            labelText: '手机号',
+            hintText: '账号',
 //            prefixIcon: Icon(Icons.account_circle)
             //border: OutlineInputBorder(borderSide: BorderSide(width: 1,color: Colors.blueAccent))
 //            icon: Icon(Icons.account_circle)
@@ -59,12 +64,17 @@ class LoginPage extends StatelessWidget {
 
   Widget _getPassword() {
     return Container(
+      margin: EdgeInsets.only(top: 20),
       child: TextFormField(
         obscureText: true,
         decoration: InputDecoration(
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(20),
+              borderSide: BorderSide(width: 1, color: Colors.grey.withOpacity(0.3))
+          ),
           contentPadding: EdgeInsets.only(left: 10,top: 15,bottom: 5),
-            labelText: '密码',
-            hintText: '请输入密码',
+//            labelText: '密码',
+            hintText: '密码',
 //            icon: Icon(Icons.remove_red_eye)
         ),
         validator: (v) {
@@ -79,12 +89,16 @@ class LoginPage extends StatelessWidget {
       margin: EdgeInsets.only(top: 20, bottom: 10),
       width: double.infinity,
       padding: EdgeInsets.only(top: 5, bottom: 5),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20)
+      ),
       child: RaisedButton(
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
             return HomePage();
           }));
         },
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         color: Colors.pink,
         child: Text(
           '登录',
