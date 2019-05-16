@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'login_page.dart';
+import 'new_login_page.dart';
+import 'logo_login_page.dart';
 
 class MyDrawer extends StatelessWidget {
 
@@ -40,12 +42,22 @@ class MyDrawer extends StatelessWidget {
           ListTile(
             title: Text('我的粉丝'),
             leading: Icon(Icons.people, size: 22),
-            onTap: () => Navigator.pop(context),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
+                  return LogoLoginPage();
+                }));
+              }
           ),
           ListTile(
             title: Text('我的关注'),
             leading: Icon(Icons.tag_faces, size: 22,),
-            onTap: () => Navigator.pop(context),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
+                return NewLogin();
+              }));
+            }
           ),
           ListTile(
             title: Text('退出'),
