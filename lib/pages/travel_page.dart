@@ -62,31 +62,6 @@ class TravelPage extends StatelessWidget {
     },
   ];
 
-  Widget _gridItemBuild(BuildContext context,index) {
-    return Expanded(
-        child:Column(
-          children: <Widget>[
-            Container(
-              child: Image.network(
-                posts[index]['imageUrl'],
-                fit: BoxFit.cover,
-              ),
-              height: 500,
-              margin: EdgeInsets.only(bottom: 10),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Container(
-              height: 80,
-              margin: EdgeInsets.only(top: 10,bottom: 6),
-              child: Text(posts[index]['title'], maxLines: 2, overflow: TextOverflow.ellipsis,),
-            ),
-          ],
-        )
-    );
-  }
-
   Widget _getImage() {
     return Container(
       width: ScreenUtil().setWidth(350),
@@ -140,27 +115,6 @@ class TravelPage extends StatelessWidget {
           Icon(Icons.favorite_border, size: 16,),
           Text('127')
         ],
-      ),
-    );
-  }
-
-  Widget _getItem(BuildContext context,index) {
-    return InkWell(
-      onTap: (){},
-      child: Container(
-          margin: EdgeInsets.only(top: 10, left: 10, bottom: 10,right: 10),
-//        width: ScreenUtil().setWidth(360),
-//        height: ScreenUtil().setHeight(600),
-          decoration: BoxDecoration(
-//          border: Border.all(width: 1, color: Colors.black26),
-          ),
-          child: Column(
-            children: <Widget>[
-              _getImage(),
-              _getTitle(),
-              _getUser(),
-            ],
-          )
       ),
     );
   }

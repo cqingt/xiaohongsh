@@ -3,6 +3,11 @@ import 'login_page.dart';
 import 'new_login_page.dart';
 import 'logo_login_page.dart';
 import 'login_register_page.dart';
+import 'my_data.dart';
+import 'my_attention.dart';
+import 'my_fans.dart';
+import 'my_favorites.dart';
+import 'my_notes.dart';
 
 class MyDrawer extends StatelessWidget {
 
@@ -27,12 +32,22 @@ class MyDrawer extends StatelessWidget {
           ListTile(
             title: Text('我的资料'),
             leading: Icon(Icons.settings, size: 22),
-            onTap: () => Navigator.pop(context),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
+                return MyData();
+              }));
+            }
           ),
           ListTile(
             title: Text('我的笔记'),
             leading: Icon(Icons.mode_edit, size: 22),
-            onTap: () => Navigator.pop(context),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
+                  return MyFans();
+                }));
+              }
           ),
           ListTile(
             title: Text('我的收藏'),
@@ -40,7 +55,7 @@ class MyDrawer extends StatelessWidget {
               onTap: () {
                 Navigator.pop(context);
                 Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
-                  return LoginRegisterPage();
+                  return MyFavorites();
                 }));
               }
           ),
@@ -51,7 +66,7 @@ class MyDrawer extends StatelessWidget {
               onTap: () {
                 Navigator.pop(context);
                 Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
-                  return LogoLoginPage();
+                  return MyFans();
                 }));
               }
           ),
@@ -61,7 +76,7 @@ class MyDrawer extends StatelessWidget {
             onTap: () {
               Navigator.pop(context);
               Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
-                return NewLogin();
+                return MyAttention();
               }));
             }
           ),

@@ -88,7 +88,6 @@ class _AddPageState extends State<AddPage> {
     setState(() {
       _image = image;
       imageList.add(image);
-      debugPrint("${imageList}");
     });
   }
 
@@ -236,7 +235,6 @@ class _AddPageState extends State<AddPage> {
 //          contentPadding: EdgeInsets.symmetric(vertical: 40)
         ),
         onSubmitted: (value) {
-          debugPrint('submit: ${value}');
           content = value;
         },
       ),
