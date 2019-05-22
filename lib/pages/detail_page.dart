@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'user_center.dart';
 
 class DetailPage extends StatelessWidget {
   @override
@@ -17,44 +18,46 @@ class DetailPage extends StatelessWidget {
       ),
       body: Container(
           child: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            _getSwiperList(),
-            _getAuthor(),
-            _getBottomLine(),
-            _getContent(),
-            _getBottomLine(),
-            _getTotalComment(),
-            _getPreComment(),
-            _getAllComments(),
-            _openComments(),
-            _getRecommends(),
-          ],
-        ),
-      )),
+            child: Column(
+              children: <Widget>[
+                _getSwiperList(),
+                _getAuthor(context),
+                _getBottomLine(),
+                _getContent(),
+                _getBottomLine(),
+                _getTotalComment(),
+                _getPreComment(),
+                _getAllComments(),
+                _openComments(),
+                _getRecommends(),
+              ],
+            ),
+          )
+      ),
     );
   }
 
   Widget _getRecommends() {
     return Container(
-      padding: EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 10),
-
+      padding: EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
       color: Colors.grey[300],
       child: Column(
         children: <Widget>[
           Container(
             alignment: Alignment.centerLeft,
             padding: EdgeInsets.only(bottom: 10),
-            child: Text('相关推荐', style: TextStyle(fontSize: ScreenUtil().setSp(24)),),
+            child: Text(
+              '相关推荐',
+              style: TextStyle(fontSize: ScreenUtil().setSp(24)),
+            ),
           ),
-
           Container(
             child: GridView.count(
               shrinkWrap: true,
-                mainAxisSpacing: 10,
+              mainAxisSpacing: 10,
               crossAxisSpacing: 10,
               physics: ScrollPhysics(),
-              childAspectRatio: 55/100,
+              childAspectRatio: 55 / 100,
               crossAxisCount: 2,
               children: <Widget>[
                 _getItem(),
@@ -77,34 +80,32 @@ class DetailPage extends StatelessWidget {
       alignment: Alignment.topLeft,
       decoration: BoxDecoration(
         shape: BoxShape.rectangle,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(10), topRight: Radius.circular(10)),
         image: DecorationImage(
-            image: NetworkImage("http://ci.xiaohongshu.com/b626f941-036d-5dd8-9413-5e659cb93993"),
-            fit: BoxFit.cover
-        ),
+            image: NetworkImage(
+                "http://ci.xiaohongshu.com/b626f941-036d-5dd8-9413-5e659cb93993"),
+            fit: BoxFit.cover),
       ),
     );
-
   }
 
   Widget _getTitle() {
     return Container(
-      margin: EdgeInsets.only(top:10,bottom: 10),
+      margin: EdgeInsets.only(top: 10, bottom: 10),
       padding: EdgeInsets.only(left: 10),
       alignment: Alignment.centerLeft,
       child: Text(
         '酸奶蒸蛋糕',
         style: TextStyle(
-            fontSize: ScreenUtil().setSp(28),
-            fontWeight: FontWeight.bold
-        ),
+            fontSize: ScreenUtil().setSp(28), fontWeight: FontWeight.bold),
         maxLines: 2,
         overflow: TextOverflow.ellipsis,
       ),
     );
   }
 
-  Widget _getUser(){
+  Widget _getUser() {
     return Container(
       padding: EdgeInsets.only(left: 10),
       child: Row(
@@ -112,15 +113,23 @@ class DetailPage extends StatelessWidget {
           CircleAvatar(
             radius: 16,
             foregroundColor: Colors.white,
-            backgroundImage: NetworkImage("https://img.xiaohongshu.com/avatar/5b5d931b14de412246d05364.jpg@80w_80h_90q_1e_1c_1x.jpg"),
+            backgroundImage: NetworkImage(
+                "https://img.xiaohongshu.com/avatar/5b5d931b14de412246d05364.jpg@80w_80h_90q_1e_1c_1x.jpg"),
           ),
           Container(
             width: ScreenUtil().setWidth(170),
-            padding: EdgeInsets.only(left: 10,right: 10),
-            child: Text('夜来香叶', style: TextStyle(),maxLines: 1, overflow: TextOverflow.ellipsis,),
+            padding: EdgeInsets.only(left: 10, right: 10),
+            child: Text(
+              '夜来香叶',
+              style: TextStyle(),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
-
-          Icon(Icons.favorite_border, size: 16,),
+          Icon(
+            Icons.favorite_border,
+            size: 16,
+          ),
           Text('127')
         ],
       ),
@@ -129,7 +138,7 @@ class DetailPage extends StatelessWidget {
 
   Widget _getItem() {
     return InkWell(
-      onTap: (){},
+      onTap: () {},
       child: Container(
           decoration: BoxDecoration(
             color: Colors.white,
@@ -141,8 +150,7 @@ class DetailPage extends StatelessWidget {
               _getTitle(),
               _getUser(),
             ],
-          )
-      ),
+          )),
     );
   }
 
@@ -163,15 +171,14 @@ class DetailPage extends StatelessWidget {
     return Container(
       alignment: Alignment.center,
       decoration: BoxDecoration(
-
           border: Border(
-          top: BorderSide(width: 1,color: Colors.grey[200]),
-        )
-      ),
+        top: BorderSide(width: 1, color: Colors.grey[200]),
+      )),
       height: ScreenUtil().setHeight(66),
-      child: Text('展开20条评论', style: TextStyle(
-        color: Colors.blueAccent
-      ),),
+      child: Text(
+        '展开20条评论',
+        style: TextStyle(color: Colors.blueAccent),
+      ),
     );
   }
 
@@ -226,7 +233,6 @@ class DetailPage extends StatelessWidget {
   // 单条评论
   Widget _getComments() {
     return Container(
-
       margin: EdgeInsets.only(left: 20, top: 2, bottom: 0, right: 0),
       padding: EdgeInsets.only(right: 0, bottom: 0),
       child: Row(
@@ -242,12 +248,11 @@ class DetailPage extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
                 border: Border(
-                  top: BorderSide(width: 1,color: Colors.grey[200]),
-                )
-            ),
+              top: BorderSide(width: 1, color: Colors.grey[200]),
+            )),
             alignment: Alignment.centerLeft,
             margin: EdgeInsets.only(left: 10, right: 0),
-            padding: EdgeInsets.only(bottom: 10, right: 0,top: 10),
+            padding: EdgeInsets.only(bottom: 10, right: 0, top: 10),
             width: ScreenUtil().setWidth(630),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -332,29 +337,43 @@ class DetailPage extends StatelessWidget {
   }
 
   // 作者信息
-  Widget _getAuthor() {
+  Widget _getAuthor(context) {
     return Container(
       margin: EdgeInsets.fromLTRB(10, 5, 10, 10),
       child: Row(
         children: <Widget>[
-          Container(
-            width: ScreenUtil().setWidth(80),
-            child: CircleAvatar(
-              radius: 20,
-              backgroundImage: NetworkImage(
-                  "https://img.xiaohongshu.com/avatar/5b5d931b14de412246d05364.jpg@80w_80h_90q_1e_1c_1x.jpg"),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(left: 6),
-            width: ScreenUtil().setWidth(470),
-            child: Text(
-              '作者姓名姓名不知道',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: ScreenUtil().setSp(30),
+          InkWell(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (BuildContext context) {
+                return UserCenter();
+              }));
+            },
+            child: Container(
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    width: ScreenUtil().setWidth(80),
+                    child: CircleAvatar(
+                      radius: 20,
+                      backgroundImage: NetworkImage(
+                          "https://img.xiaohongshu.com/avatar/5b5d931b14de412246d05364.jpg@80w_80h_90q_1e_1c_1x.jpg"),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(left: 6),
+                    width: ScreenUtil().setWidth(470),
+                    child: Text(
+                      '作者姓名姓名不知道',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: ScreenUtil().setSp(30),
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
               ),
-              overflow: TextOverflow.ellipsis,
             ),
           ),
           Container(

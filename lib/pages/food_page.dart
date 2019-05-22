@@ -94,7 +94,7 @@ class FoodPage extends StatelessWidget {
       alignment: Alignment.topLeft,
       decoration: BoxDecoration(
         shape: BoxShape.rectangle,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.only(topRight: Radius.circular(10), topLeft: Radius.circular(10)),
         image: DecorationImage(
             image: NetworkImage("http://ci.xiaohongshu.com/ff6bc26c-8317-5646-9dcb-8ca16080a1da"),
             fit: BoxFit.cover

@@ -9,7 +9,7 @@ class MyFavorites extends StatelessWidget {
       alignment: Alignment.topLeft,
       decoration: BoxDecoration(
         shape: BoxShape.rectangle,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
         image: DecorationImage(
             image: NetworkImage("http://ci.xiaohongshu.com/ff6bc26c-8317-5646-9dcb-8ca16080a1da"),
             fit: BoxFit.cover
@@ -51,7 +51,7 @@ class MyFavorites extends StatelessWidget {
             child: Text('夜来香叶', style: TextStyle(),maxLines: 1, overflow: TextOverflow.ellipsis,),
           ),
 
-          Icon(Icons.favorite_border, size: 16,),
+          Icon(Icons.favorite, size: 16, color: Colors.pink,),
           Text('127')
         ],
       ),
@@ -79,21 +79,23 @@ class MyFavorites extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        key: new PageStorageKey('food'),
-        padding: EdgeInsets.only(left: 6,right: 6, top: 10),
-        color: Color.fromRGBO(240, 240, 240, 1),
-        child: GridView.builder(
-          itemCount: 20,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 8,
-              mainAxisSpacing:8,
-              childAspectRatio: 55/100 // 宽高设置
+    return Scaffold(
+      appBar: AppBar(title: Text('我的收藏'),centerTitle: true,),
+      body: Container(
+          padding: EdgeInsets.only(left: 6,right: 6, top: 10),
+          color: Color.fromRGBO(240, 240, 240, 1),
+          child: GridView.builder(
+            itemCount: 20,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 8,
+                mainAxisSpacing:8,
+                childAspectRatio: 55/100 // 宽高设置
 //            childAspectRatio: 3/4
-          ),
-          itemBuilder: _getItem,
-        )
+            ),
+            itemBuilder: _getItem,
+          )
+      ),
     );
   }
 }

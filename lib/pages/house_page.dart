@@ -93,7 +93,7 @@ class HousePage extends StatelessWidget {
       alignment: Alignment.topLeft,
       decoration: BoxDecoration(
         shape: BoxShape.rectangle,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.only(topRight: Radius.circular(10), topLeft: Radius.circular(10)),
         image: DecorationImage(
             image: NetworkImage("http://ci.xiaohongshu.com/b626f941-036d-5dd8-9413-5e659cb93993"),
             fit: BoxFit.cover

@@ -69,7 +69,7 @@ class TravelPage extends StatelessWidget {
       alignment: Alignment.topLeft,
       decoration: BoxDecoration(
         shape: BoxShape.rectangle,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.only(topRight: Radius.circular(10), topLeft: Radius.circular(10)),
         image: DecorationImage(
             image: NetworkImage("http://ci.xiaohongshu.com/587ea6c3-9a8d-5609-8e86-759c78948222"),
             fit: BoxFit.cover
