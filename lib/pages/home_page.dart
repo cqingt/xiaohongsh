@@ -5,6 +5,7 @@ import 'package:xiaohongshu/pages/add_page.dart';
 import 'package:xiaohongshu/pages/house_page.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:xiaohongshu/pages/my_drawer.dart';
+import 'package:xiaohongshu/pages/search_page.dart';
 
 class HomePage extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = new  GlobalKey();
@@ -51,7 +52,11 @@ class HomePage extends StatelessWidget {
               icon: Icon(Icons.search),
               tooltip: '搜索',
               onPressed: () {
-                debugPrint('search');
+                // 搜索页
+                showSearch(context: context, delegate: SearchBar());
+//                Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
+//                    return SearchBar();
+//                }));
 
               },
             ),

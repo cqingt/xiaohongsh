@@ -19,6 +19,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
   flutter_screenutil: ^0.5.2
   provide: ^1.0.2
   flutter_swiper: ^1.1.6

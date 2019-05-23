@@ -17,22 +17,121 @@ class DetailPage extends StatelessWidget {
         ],
       ),
       body: Container(
-          child: SingleChildScrollView(
-            child: Column(
+            child: Stack(
               children: <Widget>[
-                _getSwiperList(),
-                _getAuthor(context),
-                _getBottomLine(),
-                _getContent(),
-                _getBottomLine(),
-                _getTotalComment(),
-                _getPreComment(),
-                _getAllComments(),
-                _openComments(),
-                _getRecommends(),
+                Container(
+                  child: ListView(
+                    children: <Widget>[
+                      _getSwiperList(),
+                      _getAuthor(context),
+                      _getBottomLine(),
+                      _getContent(),
+                      _getBottomLine(),
+                      _getTotalComment(),
+                      _getPreComment(),
+                      _getAllComments(),
+                      _openComments(),
+                      _getRecommends(),
+                      SizedBox(height: 40,)
+                    ],
+                  ),
+                ),
+
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  width: ScreenUtil().setWidth(750),
+                  height: ScreenUtil().setHeight(80),
+                  child: _getBottom()
+                )
+              ],
+            )
+      ),
+    );
+  }
+
+  Widget _getBottom() {
+    return Container(
+      decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border(
+            top: BorderSide(width: 1, color: Colors.grey[200]),
+          )
+      ),
+      child: Row(
+        children: <Widget>[
+          _getInputBox(),
+
+          Container(
+            width: ScreenUtil().setWidth(400),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                InkWell(
+                  onTap: () {},
+                  child: Chip(
+                    backgroundColor: Colors.white,
+                    avatar: Icon(Icons.favorite_border,color: Colors.black54,),
+                    label: Text( '105', style: TextStyle(color: Colors.black54),),
+                    elevation: 0,
+                    labelPadding: EdgeInsets.only(left: 5),
+                  ),
+                ),
+
+                InkWell(
+                  onTap: () {},
+                  child: Chip(
+                    backgroundColor: Colors.white,
+                    avatar: Icon(Icons.star_border,color: Colors.black54,),
+                    label: Text( '105', style: TextStyle(color: Colors.black54),),
+                    elevation: 0,
+                    labelPadding: EdgeInsets.only(left: 5),
+                  ),
+                ),
+
+                InkWell(
+                  onTap: () {},
+                  child: Chip(
+                    backgroundColor: Colors.white,
+                    avatar: Icon(Icons.message,color: Colors.black54,),
+                    label: Text( '105', style: TextStyle(color: Colors.black54),),
+                    elevation: 0,
+                    labelPadding: EdgeInsets.only(left: 5),
+                  ),
+                ),
               ],
             ),
+          ),
+
+        ],
+      ),
+    );
+  }
+
+  Widget _getInputBox() {
+    FocusNode inputFocus = FocusNode();
+    return Container(
+      margin: EdgeInsets.only(left: 10,right: 10),
+      padding: EdgeInsets.only(left: 8),
+      height: ScreenUtil().setHeight(50),
+      width: ScreenUtil().setWidth(310),
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(50),
+          color: Colors.grey[100],
+          border: Border.all(
+              width: ScreenUtil().setWidth(1),
+              color: Colors.grey.withOpacity(0.5)
           )
+      ),
+      child: TextField(
+        focusNode: inputFocus,
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          hintText: '说点什么...',
+          contentPadding: EdgeInsets.only(bottom:0),
+        ),
+        style: TextStyle(fontSize: ScreenUtil().setSp(28)),
       ),
     );
   }
