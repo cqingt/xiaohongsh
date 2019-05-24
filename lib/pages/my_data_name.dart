@@ -35,7 +35,7 @@ class MyDataName extends StatelessWidget {
               padding: EdgeInsets.only(left: 20,right: 20),
               child: TextField(
                 maxLength: 24,
-                autofocus: true,
+//                autofocus: true,
                 decoration: InputDecoration(
                   fillColor: Colors.grey,
                   border: InputBorder.none

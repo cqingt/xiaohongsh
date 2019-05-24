@@ -8,24 +8,105 @@ class ResetPasswordPage extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
-        title: Text('忘记密码'),
+        title: Text('重置密码'),
         centerTitle: true,
       ),
       body: Container(
-        padding: EdgeInsets.all(10),
-        margin: EdgeInsets.only(top: 20),
-        child: Form(
+          padding: EdgeInsets.all(10),
+          margin: EdgeInsets.only(top: 20),
+          child: Form(
 //          autovalidate: true,
-          child: Column(
-            children: <Widget>[
-              _getUsername(),
-              _getVerifyCode(),
-              _loginBtn(context),
-            ],
-          ),
-        )
-      ),
+            child: Column(
+              children: <Widget>[
+                _getTelephone(),
+                SizedBox(height: 10,),
+                _getCode(),
+                _loginBtn(context),
+              ],
+            ),
+          )),
     );
+  }
+
+  Widget _getTelephone() {
+    return Container(
+      margin: EdgeInsets.only(top: 50),
+      child: TextFormField(
+        keyboardType: TextInputType.phone,
+        decoration: InputDecoration(
+          hintText: '请输入账号',
+          border: InputBorder.none,
+          prefixIcon: Container(
+            width: 80,
+            margin: EdgeInsets.only(right: 10),
+            alignment: Alignment.center,
+            child: Text('账号'),
+            color: Colors.grey.withOpacity(0.2),
+          ),
+        ),
+        validator: (v) {
+          return v.trim().length == 11 ? null : "请输入正确的手机号码";
+        },
+      ),
+      decoration: BoxDecoration(
+          // 下滑线浅灰色，宽度1像素
+          color: Colors.grey.withOpacity(0.1),
+          border:
+              Border(bottom: BorderSide(color: Colors.grey[200], width: 1.0))),
+    );
+  }
+
+  Widget _getCode() {
+    return Container(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Expanded(
+              child: Container(
+                child: TextFormField(
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    hintText: '请输入验证码',
+                    border: InputBorder.none,
+                    prefixIcon: Container(
+                      width: 80,
+                      margin: EdgeInsets.only(right: 10),
+                      alignment: Alignment.center,
+                      child: Text('验证码'),
+                      color: Colors.grey.withOpacity(0.2),
+                    ),
+                  ),
+                  validator: (v) {
+                    return v.trim().length != 6 ? null : "请输入6位验证码";
+                  },
+                ),
+                decoration: BoxDecoration(
+                    // 下滑线浅灰色，宽度1像素
+                    color: Colors.grey.withOpacity(0.1),
+                    border: Border(
+                        bottom: BorderSide(color: Colors.grey[200], width: 1.0))),
+              ),
+              flex: 2,
+            ),
+            Expanded(
+              child: Container(
+                height: ScreenUtil().setHeight(80),
+                child: RaisedButton(
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(2)),
+                  onPressed: () {},
+                  color: Colors.pink,
+                  child: Text(
+                    '获取验证码',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+              flex: 1,
+            ),
+          ],
+    ));
   }
 
   Widget _getUsername() {
@@ -33,8 +114,8 @@ class ResetPasswordPage extends StatelessWidget {
       child: TextFormField(
         keyboardType: TextInputType.phone,
         decoration: InputDecoration(
-            labelText: '手机号',
-            hintText: '请输入手机号',
+          labelText: '手机号',
+          hintText: '请输入手机号',
 //            icon: Icon(Icons.account_circle)
         ),
         validator: (v) {
@@ -47,36 +128,39 @@ class ResetPasswordPage extends StatelessWidget {
   Widget _getVerifyCode() {
     return Container(
 //      width: ScreenUtil().setWidth(600),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Expanded(
-            child: TextFormField(
-              decoration: InputDecoration(
-                labelText: '验证码',
-                hintText: '请输入验证码',
+        child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Expanded(
+          child: TextFormField(
+            decoration: InputDecoration(
+              labelText: '验证码',
+              hintText: '请输入验证码',
 //            icon: Icon(Icons.account_circle)
-              ),
-              validator: (v) {
-                return v.trim().length > 0 ? null : "验证码不能为空";
-              },
             ),
-            flex: 2,
+            validator: (v) {
+              return v.trim().length > 0 ? null : "验证码不能为空";
+            },
           ),
-          Expanded(
-            child: Container(
-              child: RaisedButton(
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                onPressed: (){},
-                color: Colors.pink,
-                child: Text('获取验证码', style: TextStyle(color: Colors.white),),
+          flex: 2,
+        ),
+        Expanded(
+          child: Container(
+            child: RaisedButton(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)),
+              onPressed: () {},
+              color: Colors.pink,
+              child: Text(
+                '获取验证码',
+                style: TextStyle(color: Colors.white),
               ),
             ),
-            flex: 1,
           ),
-        ],
-      )
-    );
+          flex: 1,
+        ),
+      ],
+    ));
   }
 
   Widget _loginBtn(context) {
@@ -86,7 +170,8 @@ class ResetPasswordPage extends StatelessWidget {
       padding: EdgeInsets.only(top: 5, bottom: 5),
       child: RaisedButton(
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
+          Navigator.push(context,
+              MaterialPageRoute(builder: (BuildContext context) {
             return SetPasswordPage();
           }));
         },

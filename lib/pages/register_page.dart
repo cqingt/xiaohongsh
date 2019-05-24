@@ -12,7 +12,7 @@ class RegisterPage extends StatelessWidget {
       ),
       body: Container(
           padding: EdgeInsets.all(10),
-          margin: EdgeInsets.only(top: 50),
+          margin: EdgeInsets.only(top: 50,left: 20,right: 20),
           child: Form(
 //            autovalidate: true,
             child: Column(

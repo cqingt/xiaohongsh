@@ -8,6 +8,7 @@ import 'my_attention.dart';
 import 'my_fans.dart';
 import 'my_favorites.dart';
 import 'my_notes.dart';
+import 'package:flutter/cupertino.dart';
 
 class MyDrawer extends StatelessWidget {
 
@@ -85,7 +86,7 @@ class MyDrawer extends StatelessWidget {
             leading: Icon(Icons.directions, size: 22,),
             onTap: () {
               Navigator.pop(context); // 对于在drawer中使用导航，需关闭drawer 再跳转，否则返回报错
-              Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
+              Navigator.push(context, CupertinoPageRoute(builder: (BuildContext context){
                 return LoginPage();
               }));
             }
