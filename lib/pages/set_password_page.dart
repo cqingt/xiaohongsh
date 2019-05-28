@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'login_page.dart';
+import 'package:flutter/cupertino.dart';
 
 class SetPasswordPage extends StatelessWidget {
   @override
@@ -18,6 +19,7 @@ class SetPasswordPage extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 _getPassword(),
+                SizedBox(height: 6,),
                 _getRePeat(),
                 _registerBtn(context),
               ],
@@ -33,7 +35,7 @@ class SetPasswordPage extends StatelessWidget {
       padding: EdgeInsets.only(top: 5, bottom: 5),
       child: RaisedButton(
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
+          Navigator.push(context, CupertinoPageRoute(builder: (BuildContext context){
             return LoginPage();
           }));
         },
@@ -77,7 +79,6 @@ class SetPasswordPage extends StatelessWidget {
 
   Widget _getRePeat() {
     return Container(
-      margin: EdgeInsets.only(top: 10),
       child: TextFormField(
         obscureText: true,
         decoration: InputDecoration(

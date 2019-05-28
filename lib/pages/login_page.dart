@@ -36,7 +36,7 @@ class LoginPage extends StatelessWidget {
 //                  _getUsername(),
 //                  _getPassword(),
                   _getTelephone(),
-                  SizedBox(height: 10,),
+                  SizedBox(height: 6,),
                   _getPwd(),
                   _loginBtn(context),
                   _getBottom(context),
@@ -206,7 +206,7 @@ class LoginPage extends StatelessWidget {
                   return RegisterPage();
                 }));
               },
-              child: Text('快速注册'),
+              child: Padding(padding: EdgeInsets.only(top: 8,bottom: 8,right: 50), child: Text('快速注册'),),
             ),
           ),
           Container(
@@ -217,7 +217,7 @@ class LoginPage extends StatelessWidget {
                   return ResetPasswordPage();
                 }));
               },
-              child: Text('忘记密码'),
+              child: Padding(padding: EdgeInsets.only(top: 8,bottom: 8,left: 50), child: Text('忘记密码'),),
             ),
           )
         ],

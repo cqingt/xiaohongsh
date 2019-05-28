@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'set_password_page.dart';
+import 'package:flutter/cupertino.dart';
 
 class ResetPasswordPage extends StatelessWidget {
   @override
@@ -19,7 +20,7 @@ class ResetPasswordPage extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 _getTelephone(),
-                SizedBox(height: 10,),
+                SizedBox(height: 6),
                 _getCode(),
                 _loginBtn(context),
               ],
@@ -171,7 +172,7 @@ class ResetPasswordPage extends StatelessWidget {
       child: RaisedButton(
         onPressed: () {
           Navigator.push(context,
-              MaterialPageRoute(builder: (BuildContext context) {
+              CupertinoPageRoute(builder: (BuildContext context) {
             return SetPasswordPage();
           }));
         },
