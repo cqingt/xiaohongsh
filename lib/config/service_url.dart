@@ -1,4 +1,4 @@
-const serviceUrl = ''; //主域名
+const serviceUrl = 'http://app.cidianpu.com/apps/'; //主域名
 
 const servicePath = {
   'homePage' : serviceUrl + 'home/index', // 主页

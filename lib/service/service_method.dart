@@ -3,15 +3,20 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:convert';
 import '../config/service_url.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Future httpPost(url, {formData}) async {
   try {
     print('开始获取数据..............');
     Response response;
     Dio dio = Dio();
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String token = prefs.getString('login-token') ?? '';
+    
     // 设置请求头:表单
     dio.options.contentType = ContentType.parse('application/x-www-form-urlencoded');
-    dio.options.headers = {'Authorization': "Bearer 111111111111" }; // 用户登录
+    //dio.options.headers = {'Authorization': "Bearer $token" }; // 用户登录
 
     if (formData == null) {
       response = await dio.post(servicePath[url]);
@@ -36,7 +41,10 @@ Future httpGet(url, {params}) async {
 
     Response response;
     Dio dio = Dio();
-    dio.options.headers = {'Authorization': "Bearer 111111111111" }; // 用户登录
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String token = prefs.getString('login-token') ?? '';
+
+    dio.options.headers = {'Authorization': "Bearer $token" }; // 用户登录
 
     if (params == null) {
       response = await dio.get(servicePath[url]);

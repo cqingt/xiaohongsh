@@ -5,8 +5,38 @@ import 'reset_password_page.dart';
 import 'home_page.dart';
 import 'home_page.dart';
 import 'package:flutter/cupertino.dart';
+import '../service/service_method.dart';
+import 'dart:convert';
+import 'package:fluttertoast/fluttertoast.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  String account;
+  String password;
+  TextEditingController accountController = TextEditingController();
+  TextEditingController pwdController = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    accountController.addListener((){
+        setState(() {
+          account = accountController.text;
+        });
+    });
+
+    pwdController.addListener((){
+      setState(() {
+        password = pwdController.text;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +59,7 @@ class LoginPage extends StatelessWidget {
             padding: EdgeInsets.only(top: 10,left: 30,right: 30),
             margin: EdgeInsets.only(top: 50),
             child: Form(
-//          autovalidate: true,
+              autovalidate: true,
               child: Column(
                 children: <Widget>[
                   _getTitle(),
@@ -66,6 +96,7 @@ class LoginPage extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(top: 50),
       child: TextFormField(
+        controller: accountController,
         keyboardType: TextInputType.phone,
         decoration: InputDecoration(
           hintText: '请输入账号',
@@ -95,6 +126,7 @@ class LoginPage extends StatelessWidget {
     return Container(
       child: TextFormField(
         obscureText: true,
+        controller: pwdController,
         keyboardType: TextInputType.url,
         decoration: InputDecoration(
           hintText: '请输入密码',
@@ -167,19 +199,35 @@ class LoginPage extends StatelessWidget {
     );
   }
 
+  // 登录
   Widget _loginBtn(context) {
     return Container(
       margin: EdgeInsets.only(top: 20, bottom: 10),
       width: double.infinity,
       padding: EdgeInsets.only(top: 5, bottom: 5),
-//      decoration: BoxDecoration(
-//        borderRadius: BorderRadius.circular(2)
-//      ),
       child: RaisedButton(
-        onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
-            return HomePage();
-          }));
+        onPressed: () async {
+          print(account);
+          print(password);
+          var result = await httpPost('loginPage', formData: {'account': account, 'password': password});
+          result = json.decode(result.toString());
+
+          if (result['code'] != 200) {
+//            Fluttertoast.showToast(
+//                msg: result['msg'],
+//                toastLength: Toast.LENGTH_SHORT,
+//                gravity: ToastGravity.CENTER,
+//                timeInSecForIos: 1,
+//                backgroundColor: Colors.red,
+//                textColor: Colors.white,
+//                fontSize: 16.0
+//            );
+            AlertDialog(title: Text(result['msg']));
+          }
+
+//          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
+//            return HomePage();
+//          }));
         },
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(2)),
         color: Colors.pink,
