@@ -4,8 +4,10 @@ import 'dart:io';
 import 'dart:convert';
 import '../config/service_url.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../utils/loading_dialog.dart';
 
 Future httpPost(url, {formData}) async {
+  LoadingDialog('ssss');
   try {
     print('开始获取数据..............');
     Response response;

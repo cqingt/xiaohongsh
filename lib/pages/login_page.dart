@@ -213,16 +213,15 @@ class _LoginPageState extends State<LoginPage> {
           result = json.decode(result.toString());
 
           if (result['code'] != 200) {
-//            Fluttertoast.showToast(
-//                msg: result['msg'],
-//                toastLength: Toast.LENGTH_SHORT,
-//                gravity: ToastGravity.CENTER,
-//                timeInSecForIos: 1,
-//                backgroundColor: Colors.red,
-//                textColor: Colors.white,
-//                fontSize: 16.0
-//            );
-            AlertDialog(title: Text(result['msg']));
+            Fluttertoast.showToast(
+                msg: result['msg'],
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.CENTER,
+                timeInSecForIos: 1,
+                backgroundColor: Colors.black54,
+                textColor: Colors.white,
+                fontSize: 16.0
+            );
           }
 
 //          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){

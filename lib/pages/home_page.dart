@@ -10,6 +10,11 @@ import 'package:xiaohongshu/pages/search_page.dart';
 class HomePage extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = new  GlobalKey();
 
+//  @override
+//  void dispose() {
+//    _tabController.dispose();
+//  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
