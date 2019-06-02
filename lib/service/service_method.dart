@@ -5,9 +5,12 @@ import 'dart:convert';
 import '../config/service_url.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../utils/loading_dialog.dart';
+import '../utils/utils.dart';
+import 'package:flutter/material.dart';
 
-Future httpPost(url, {formData}) async {
-  LoadingDialog('ssss');
+Future httpPost(context, url, {formData, loadingText}) async {
+  Utils.showLoadingDialog(context, loadingText != null ? loadingText : '请求中');
+
   try {
     print('开始获取数据..............');
     Response response;
@@ -25,6 +28,8 @@ Future httpPost(url, {formData}) async {
     } else {
       response = await dio.post(servicePath[url], data:formData);
     }
+
+    Navigator.pop(context);
 
     if (response.statusCode == 200) {
       return response.data;

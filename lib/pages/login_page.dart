@@ -7,7 +7,8 @@ import 'home_page.dart';
 import 'package:flutter/cupertino.dart';
 import '../service/service_method.dart';
 import 'dart:convert';
-import 'package:fluttertoast/fluttertoast.dart';
+
+import '../utils/utils.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -59,7 +60,7 @@ class _LoginPageState extends State<LoginPage> {
             padding: EdgeInsets.only(top: 10,left: 30,right: 30),
             margin: EdgeInsets.only(top: 50),
             child: Form(
-              autovalidate: true,
+//              autovalidate: true,
               child: Column(
                 children: <Widget>[
                   _getTitle(),
@@ -207,26 +208,19 @@ class _LoginPageState extends State<LoginPage> {
       padding: EdgeInsets.only(top: 5, bottom: 5),
       child: RaisedButton(
         onPressed: () async {
-          print(account);
-          print(password);
-          var result = await httpPost('loginPage', formData: {'account': account, 'password': password});
+          var result = await httpPost(context, 'loginPage', loadingText: '登录中', formData: {'account': account, 'password': password});
           result = json.decode(result.toString());
 
           if (result['code'] != 200) {
-            Fluttertoast.showToast(
-                msg: result['msg'],
-                toastLength: Toast.LENGTH_SHORT,
-                gravity: ToastGravity.CENTER,
-                timeInSecForIos: 1,
-                backgroundColor: Colors.black54,
-                textColor: Colors.white,
-                fontSize: 16.0
-            );
+            //GlobalKey<ScaffoldState>().currentState.showSnackBar(SnackBar(content: Text(result['msg'])));
+            //Utils.showSnackBar(result['msg'], _scaffoldKey);
+            Utils.showFlutterToast(result['msg']);
+          } else {
+            // 记录登录标识
+            Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
+              return HomePage();
+            }));
           }
-
-//          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
-//            return HomePage();
-//          }));
         },
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(2)),
         color: Colors.pink,
