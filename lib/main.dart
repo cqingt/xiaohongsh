@@ -3,6 +3,7 @@ import 'package:xiaohongshu/pages/index_page.dart';
 import 'package:provide/provide.dart';
 import './provide/current_index.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   var providers = Providers();
@@ -17,6 +18,13 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+            statusBarColor: Colors.transparent,
+            statusBarIconBrightness: Brightness.dark
+        )
+    );
+
     return MaterialApp(
       localizationsDelegates: [
         // 本地化的代理类
