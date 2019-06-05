@@ -6,6 +6,7 @@ import 'package:xiaohongshu/pages/house_page.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:xiaohongshu/pages/my_drawer.dart';
 import 'package:xiaohongshu/pages/search_page.dart';
+import 'package:flutter/cupertino.dart';
 
 class HomePage extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = new  GlobalKey();
@@ -58,10 +59,8 @@ class HomePage extends StatelessWidget {
               tooltip: '搜索',
               onPressed: () {
                 // 搜索页
-                showSearch(context: context, delegate: SearchBar());
-//                Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
-//                    return SearchBar();
-//                }));
+                //showSearch(context: context, delegate: SearchBar());
+                Navigator.push(context, CupertinoPageRoute(builder: (BuildContext context)=> SearchPage()));
 
               },
             ),

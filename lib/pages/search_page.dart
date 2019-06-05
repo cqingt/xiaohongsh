@@ -2,284 +2,200 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/foundation.dart' show SynchronousFuture;
-//class SearchPage extends StatefulWidget {
-//  @override
-//  _SearchPageState createState() => _SearchPageState();
-//}
-//
-//class _SearchPageState extends State<SearchPage> {
-//  @override
-//  Widget build(BuildContext context) {
-//    return Scaffold(
-//      appBar: AppBar(
-//        title: Text('搜索'),
-//        centerTitle: true,
-//        actions: <Widget>[
-//          IconButton
-//        ],
-//      ),
-//      //body: SearchBar()
-//    );
-//  }
-//}
+import 'dart:math' as math;
+import 'search_result.dart';
+import 'package:flutter/cupertino.dart';
 
-// 搜索框
-class SearchBar extends SearchDelegate{
+class SearchPage extends StatefulWidget {
   @override
-  List<Widget> buildActions(BuildContext context) {
-    // 清除
-    return query.isEmpty ? [] : [
-      IconButton(
-          icon: Icon(Icons.clear),
-          onPressed: (){
-            query = '';
-            showSuggestions(context); // 清除原搜索结果
-          },
-        ),
-      ];
-  }
+  _SearchPageState createState() => _SearchPageState();
+}
 
-  // 返回
-  @override
-  Widget buildLeading(BuildContext context) {
-    return IconButton(
-        icon: AnimatedIcon(
-            icon: AnimatedIcons.menu_arrow,
-            progress: transitionAnimation
-        ),
-        onPressed: () {
-          close(context, null);
-        },
-      );
-  }
+class _SearchPageState extends State<SearchPage> {
+  List hotWords = ['耐克', '李宁', '安踏', '361', 'puma', 'addidas', '锐步', '森马', '鸿星尔克', '匹克', '老北京', 'AJ', '乔丹']; //热搜词
+  List historyWords = ['耐克', '李宁', '安踏', 'addidas', '锐步', '森马', '鸿星尔克', '匹克', '老北京', '乔丹']; //搜索历史
+  List<String> suggestWords = []; //搜索建议
+  TextEditingController _controller = TextEditingController();
+  String query = ''; // 搜索词
 
   @override
-  ThemeData appBarTheme(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
-    return theme.copyWith(
-      textTheme: theme.primaryTextTheme, // 文字颜色
-      primaryColor: Colors.pink,
-      primaryIconTheme: theme.primaryIconTheme.copyWith(color: Colors.white),
-      //primaryColorBrightness: Brightness.light,
-      primaryTextTheme: theme.textTheme,
-    );
-  }
-
-  // 点击搜索，出现结果
-  @override
-  Widget buildResults(BuildContext context) {
-
-    return Container(
-      child: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Container(
-              margin:EdgeInsets.only(left: 10, top: 5,bottom: 0),
-              alignment: Alignment.centerLeft,
-              height: ScreenUtil().setHeight(50),
-              child: Text('共50条搜索结果'),
-            ),
-            _getNotes(),
-          ],
-        )
-      )
-    );
-  }
-
-  // 下拉框提示
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    // 推荐搜索词
-    List searchList = [
-      "lao-老王",
-      "lao-老张",
-      "xiao-小王",
-      "xiao-小张"
-    ];
-
-    // 搜索历史
-    List recentSuggest = [
-      "马云-1",
-      "马化腾-2"
-    ];
-
-    final suggestionList = query.isEmpty ? recentSuggest : searchList.where((input) => input.startsWith(query)).toList();
-
-    return ListView.builder(
-        itemCount: suggestionList.length,
-        itemBuilder: (context, index) {
-          return InkWell(
-            onTap: (){
-              query = suggestionList[index]; // 给搜索框赋值
-              showResults(context); // 展示结果
-            },
-            child: Container(
-              height: ScreenUtil().setHeight(70),
-              alignment: Alignment.centerLeft,
-              margin: EdgeInsets.only(left: 20,right: 20),
-              padding: EdgeInsets.only(top:5, bottom: 5, ),
-              decoration: BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(width: 1,color: Colors.grey[200])
-                )
-              ),
-              child: Row(
-                children: <Widget>[
-                  query.isEmpty ? Icon(Icons.access_time, color: Colors.grey, size: 20,) : Text(''),
-                  SizedBox(width: 10,),
-                  Expanded(
-                    child: RichText(
-                        text: TextSpan(
-                            text: suggestionList[index].substring(0, query.length),
-                            style: TextStyle(
-                                color: Colors.black, fontWeight: FontWeight.bold
-                            ),
-                            children: [
-                              TextSpan(
-                                  text: suggestionList[index].substring(query.length),
-                                  style: TextStyle(color: Colors.grey)
-                              ),
-                            ]
-                        )
-                    ),
-                  ),
-                  query.isEmpty ?
-                  IconButton(
-                    icon: Icon(Icons.clear, color: Colors.grey, size: 20,),
-                    onPressed: (){
-                      // 删除建议列表
-                      debugPrint('$index');
-                      recentSuggest.removeAt(index);
-                    },
-                  )
-                      : Text(''),
-                ],
-              )
-            )
-          );
-        }
-    );
-  }
-
-  Widget _getNotes() {
-    return Container(
-      padding: EdgeInsets.only(top: 10, left: 8, right: 8, bottom: 10),
-      child: GridView.builder(
-          physics: ScrollPhysics(),
-          itemCount: 20,
-          shrinkWrap: true,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 8,
-            mainAxisSpacing: 8,
-            childAspectRatio: 55 / 100,
-          ),
-          itemBuilder: _getNoteItem
-      ),
-    );
-  }
-
-  Widget _getNoteItem(BuildContext context, index) {
-    return InkWell(
-      onTap: () {},
-      child: Container(
-          decoration: BoxDecoration(
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        brightness: Brightness.dark, // 状态栏字体颜色，dart白色，light 黑色
+        backgroundColor: Colors.pink,
+        leading: GestureDetector(
+          onTap: () => Navigator.pop(context),
+          child: Icon(
+            Icons.arrow_back,
             color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
+            size: ScreenUtil().setSp(42),
           ),
-          child: Column(
-            children: <Widget>[
-              _getImage(),
-              _getTitle(),
-              _getUser(),
-            ],
-          )),
+        ),
+        actions: <Widget>[
+          InkWell(
+              onTap: () {
+                Navigator.push(context, CupertinoPageRoute(builder: (BuildContext context) => SearchResult(_controller.text)));
+              },
+              child: Container(
+                alignment: Alignment.center,
+                padding: EdgeInsets.only(left: 10, right: 15),
+                child: Text(
+                  '搜索',
+                  style: TextStyle(
+                      color: query.isEmpty ? Colors.white54 : Colors.white,
+                      fontWeight: FontWeight.bold),
+                ),
+              ))
+        ],
+        elevation: 0,
+        titleSpacing: 0,
+        title: _searchInputWidget(),
+      ),
+      body: _bodyWidget(),
     );
   }
 
-  Widget _getImage() {
+  // 搜索框
+  Widget _searchInputWidget() {
     return Container(
-      height: ScreenUtil().setHeight(420),
-      alignment: Alignment.topLeft,
+      height: 34,
+      padding: EdgeInsets.only(left: 10),
+      alignment: Alignment.center,
       decoration: BoxDecoration(
-        shape: BoxShape.rectangle,
-        borderRadius: BorderRadius.only(
-            topRight: Radius.circular(10), topLeft: Radius.circular(10)),
-        image: DecorationImage(
-            image: NetworkImage(
-                "http://ci.xiaohongshu.com/b626f941-036d-5dd8-9413-5e659cb93993"),
-            fit: BoxFit.cover),
+        color: Color.fromRGBO(245, 245, 245, 1.0),
+        borderRadius: BorderRadius.all(Radius.circular(5)),
       ),
-    );
-  }
-
-  Widget _getTitle() {
-    return Container(
-      margin: EdgeInsets.only(top: 10, bottom: 10),
-      padding: EdgeInsets.only(left: 10),
-      alignment: Alignment.centerLeft,
-      child: Text(
-        '酸奶蒸蛋糕',
-        style: TextStyle(
-            fontSize: ScreenUtil().setSp(28), fontWeight: FontWeight.bold),
-        maxLines: 2,
-        overflow: TextOverflow.ellipsis,
-      ),
-    );
-  }
-
-  Widget _getUser() {
-    return Container(
-      padding: EdgeInsets.only(left: 10),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center, // 上下居中
         children: <Widget>[
-          CircleAvatar(
-            radius: 16,
-            foregroundColor: Colors.white,
-            backgroundImage: NetworkImage(
-                "https://img.xiaohongshu.com/avatar/5b5d931b14de412246d05364.jpg@80w_80h_90q_1e_1c_1x.jpg"),
+          Icon(
+            Icons.search,
+            size: 20,
+            color: Color.fromRGBO(51, 51, 51, 1),
           ),
-          Container(
-            width: ScreenUtil().setWidth(170),
-            padding: EdgeInsets.only(left: 10, right: 10),
-            child: Text(
-              '夜来香叶',
-              style: TextStyle(),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
+          Expanded(
+            child: TextField(
+              controller: _controller,
+              onSubmitted: (val) {
+                print(val);
+              },
+              onChanged: _searchWordsChange,
+              cursorWidth: 1.2,
+              // 鼠标宽度
+//              autofocus: true,
+              cursorColor: Color.fromRGBO(51, 51, 51, 1),
+              // 鼠标颜色
+              decoration: InputDecoration(
+                  contentPadding: EdgeInsets.all(0),
+                  hintText: '搜索感兴趣的内容',
+                  hintStyle: TextStyle(fontSize: 14),
+                  border: InputBorder.none),
             ),
           ),
-          Icon(
-            Icons.favorite_border,
-            size: 16,
-          ),
-          Text('127')
+          query.isEmpty
+              ? Text('')
+              : IconButton(
+                  alignment: Alignment.centerRight,
+                  icon: Icon(
+                    Icons.clear,
+                    color: Color.fromRGBO(151, 151, 151, 1),
+                    size: 20,
+                  ),
+                  onPressed: () {
+                    query = '';
+                    _controller.text = '';
+                    setState(() {
+                      query = '';
+                    });
+                    //showSuggestions(context); // 清除原搜索结果
+                  },
+                ),
         ],
       ),
     );
   }
-}
 
-// 切换中文，
-class CustomLocalizationDelegate extends LocalizationsDelegate<MaterialLocalizations> {
-  const CustomLocalizationDelegate();
+  // 搜索词改变时，请求接口，获取推荐词
+  void _searchWordsChange(String queryWords) async {
+    setState(() {
+      query = queryWords;
+    });
+  }
 
-  @override
-  bool isSupported(Locale locale) => locale.languageCode == 'zh';
+  // 热搜词，搜索历史
+  Widget _bodyWidget() {
+    return SingleChildScrollView(
+      child: Column(
+        children: <Widget>[
+          Container(
+            height: 40,
+            padding: EdgeInsets.only(left: 20),
+            alignment: Alignment.centerLeft,
+            color: Color.fromRGBO(245, 245, 245, 1.0),
+            child: Text('热搜词'),
+            margin: EdgeInsets.only(bottom: 10),
+          ),
+          Wrap(
+              spacing: 10, // 左右间距
+              runSpacing: 10,
+              children: hotWords.map(
+                    (i) => GestureDetector(
+                          onTap: () {
+                            _controller.text = i;
+                            setState(() {
+                              query = i;
+                            });
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: _randomColor(),
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Text(i, style: TextStyle(color: Colors.white),),
+                            padding: EdgeInsets.symmetric( horizontal: 7, vertical: 5),
+                          ),
+                        ),
+                  ).toList()),
 
-  @override
-  Future<MaterialLocalizations> load(Locale locale) => SynchronousFuture<MaterialLocalizations>(CustomLocalization());
+          Container(
+            height: 40,
+            padding: EdgeInsets.only(left: 20),
+            alignment: Alignment.centerLeft,
+            color: Color.fromRGBO(245, 245, 245, 1.0),
+            child: Text('搜索历史'),
+            margin: EdgeInsets.only(bottom: 10,top: 10),
+          ),
+            Container(
+              alignment: Alignment.centerLeft,
+              padding: EdgeInsets.only(left: 20,right: 20),
+              child: Wrap(
+                  spacing: 10,
+                  children: historyWords.map(
+                        (i) => GestureDetector(
+                      onTap: () {},
+                      child: Chip(
+                        labelPadding: EdgeInsets.only(left: 4,right: 4),
+                        label: Text(i, style: TextStyle(fontSize: 12),),
+                        padding: EdgeInsets.symmetric( horizontal: 7, vertical: 5),
+                        deleteIconColor: Colors.black38,
+                        onDeleted: (){
+                          print(i);
+                          historyWords.remove(i);
+                          setState(() {
+                            historyWords = historyWords;
+                          });
+                        },
+                      ),
+                    ),
+                  ).toList()),
+            )
+        ],
+      ),
+    );
+  }
 
-  @override
-  bool shouldReload(CustomLocalizationDelegate old) => false;
-
-  @override
-  String toString() => 'CustomLocalization.delegate(zh_CN)';
-}
-
-class CustomLocalization extends DefaultMaterialLocalizations {
-    CustomLocalization();
-
-//  @override
-//  String get searchFieldLabel => "帮助";
+  // 获取随机颜色
+  Color _randomColor() {
+    return Color((math.Random().nextDouble() * 0xFFFFFF).toInt() << 0).withOpacity(1.0);
+  }
 }
